@@ -4,41 +4,45 @@ import csv
 
 def main():
     pygame.init()
-    tela=pygame.display.set_mode([800, 640])
-    pygame.display.set_caption("We have to decide yet!") #nome jogo
+    tela=pygame.display.set_mode([800, 640])              #Resolução
+    pygame.display.set_caption("We have to decide yet!")  #nome jogo(A ser decidido)
 
     #Variaveis de movimentação
     moving_left = False
     moving_right = False
 
-
-    #framerat
+    #Framerate
     clock=pygame.time.Clock()
     fps=60
 
-    #varivaeis jogo
+    #Gravidade
     GRAVITY=0.5
+
+    #Config Tile 
     Linhas=16
     Colunas=150
     tile_size=40
-    tile_types=5
-    level=1
+    tile_types=5   #Com todas as imagens, aumentar aqui
+    level=1        #Possibilidade de acrescentar mais
 
-    #Tiles na lista
+    #Criar uma lista de Tiles
     img_list=[]
     for x in range(tile_types):
-        img= pygame.image.load(f'C:/Users/gusta/Documents/PETEEL/Projeto/Imagens/Tiles/{x}.png')
+        img= pygame.image.load(f'C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/Tiles/{x}.png')
         img= pygame.transform.scale(img, (tile_size, tile_size))
         img_list.append(img)
 
+    #Cria um background
     def draw_bg():
         tela.fill(BG)
         pygame.draw.line(tela, BRANCO,(0,400),(800,400))
 
-    #cor
+    #Cores para utilizar
     BG=(135,206,235)
     BRANCO=(255,255,255)
 
+
+    #Funções para jogador
     class PP(pygame.sprite.Sprite):
         def __init__(self, x, y, scale, speed):
                     pygame.sprite.Sprite.__init__(self)
@@ -54,14 +58,17 @@ def main():
                     self.action = 0
                     self.update_time = pygame.time.get_ticks()
                     temp_list=[]
+                    #Lembrar que dependendo da nossa animação do personagem podemos aumentar range
+                    #Aqui é feito animação do personagem andando(flip de imagens)
                     for i in range(2):
-                        img1 = pygame.image.load(f"C:/Users/gusta/Documents/PETEEL/Projeto/Imagens/Personagem/{i}.png")
+                        img1 = pygame.image.load(f"C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/Personagem/{i}.png")
                         img1 = pygame.transform.scale(img1, (int(img1.get_width() * scale), int(img1.get_height() * scale)))
                         temp_list.append(img1)
                     self.animation_list.append(temp_list)
                     temp_list=[]
+                    #Aqui é feito animação do personagem parado(flip de imagens)
                     for i in range(1):
-                        img1 = pygame.image.load(f"C:/Users/gusta/Documents/PETEEL/Projeto/Imagens/Personagem-Parado/{i}.png")
+                        img1 = pygame.image.load(f"C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/Personagem-Parado/{i}.png")
                         img1 = pygame.transform.scale(img1, (int(img1.get_width() * scale), int(img1.get_height() * scale)))
                         temp_list.append(img1)
                     self.animation_list.append(temp_list)
@@ -69,6 +76,7 @@ def main():
                     self.rect = self.image.get_rect()
                     self.rect.center = (x, y)
 
+        #Definições de movimentação
         def move(self, moving_left,moving_right):
             dx=0
             dy=0
@@ -86,13 +94,13 @@ def main():
                 self.jump = False
                 self.in_air=True
             
-            #Gravidade aqui
+            #Gravidade
             self.vel_y += GRAVITY
             if self.vel_y >10:
                 self.vel_y
             dy += self.vel_y
 
-            #colisao com chão
+            #Colisao com chão
             if self.rect.bottom +dy >400:
                 dy=400-self.rect.bottom
                 self.in_air = False
@@ -102,7 +110,8 @@ def main():
             self.rect.y += dy
         
         def update_animation(self):
-            #ARRUMAR COOLDOWN QUANDO COLOCAR AS PNS PERMANENTES
+            #Arrumar COOLDOWN dependendo das novas PNGS para o personagem
+            #Isso aqui é feito para quando acabar as imagens voltar para imagem zero e assim ir fazendo o loop
             ANIMATION_COOLDOWN = 100
             self.image=self.animation_list[self.action][self.frame_index]
             if pygame.time.get_ticks() - self.update_time > ANIMATION_COOLDOWN:
@@ -120,6 +129,7 @@ def main():
         def draw(self):
             tela.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
+    #Criação do mapa com tiles
     class World():
         def __init__(self):
             self.obstacle_list=[]
@@ -134,14 +144,14 @@ def main():
                         img_rect.x=x*tile_size
                         img_rect.y=y*tile_size
                         tile_data=(img, img_rect)
-                        if tile >=0 and tile <=8:
+                        if tile >=0 and tile <=5:
                             self.obstacle_list.append(tile_data)
-                        elif tile >=9 and tile <=10:
-                            pass #Colocar lava ou agua aqui
-                        elif tile >=11 and tile<=14:
-                            pass #decoração
-                        elif tile==20:
-                            pass #saida
+                        #elif tile >=9 and tile <=10:
+                            #pass #Colocar lava ou agua aqui
+                        #elif tile >=11 and tile<=14:
+                            #pass #Decoração
+                        #elif tile==20:
+                            #pass #Saida
         def draw(self):
             for tile in self.obstacle_list:
                 screen.blit(tile[0],tile[1])
@@ -149,33 +159,31 @@ def main():
     
     player=PP(200,200,0.3,5)
    
-    #lista de tiles para criar o cenário
+    #Lista csv de tiles para criar o cenário
 
     world_data= []
     for row in range(Linhas):
         r=[-1]*Colunas
         world_data.append(r)
 
-    #load in level data to create world
-    with open('C:/Users/gusta/Documents/PETEEL/Projeto/Imagens/level1.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',')
+    #Load do mundo a partir do csv
+    with open('C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/level1.csv', newline='') as csvfile:
+        reader = csv.reader(csvfile, delimiter=';')
         for x, row in enumerate(reader):
             for y, tile in enumerate(row):
                 world_data[x][y]=(tile)
     
     world=World()
 
-
-
-
     sair=False
     #Estrutura para fechar jogo
     while sair==False:
+
         clock.tick(fps)
-        draw_bg()
-        world.draw()
-        player.update_animation()
-        player.draw()      
+        draw_bg()                  #chama background
+        world.draw()               #chama world
+        player.update_animation()  #faz o update a partir dos fps
+        player.draw()              #chama jogador      
         pygame.display.update()
 
         if player.alive:
