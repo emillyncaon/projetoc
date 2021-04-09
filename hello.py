@@ -5,7 +5,7 @@ import csv
 def main():
     pygame.init()
     tela=pygame.display.set_mode([800, 640])              #Resolução
-    pygame.display.set_caption("We have to decide yet!")  #nome jogo(A ser decidido)
+    pygame.display.set_caption("We have to decide yett!")  #nome jogo(A ser decidido)
 
     #Variaveis de movimentação
     moving_left = False
@@ -19,8 +19,8 @@ def main():
     GRAVITY=0.5
 
     #Config Tile 
-    Linhas=16
-    Colunas=150
+    ROWS=16
+    COLS=150
     tile_size=40
     tile_types=5   #Com todas as imagens, aumentar aqui
     level=1        #Possibilidade de acrescentar mais
@@ -28,7 +28,7 @@ def main():
     #Criar uma lista de Tiles
     img_list=[]
     for x in range(tile_types):
-        img= pygame.image.load(f'C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/Tiles/{x}.png')
+        img= pygame.image.load(f'Imagens/Tiles/{x}.png')
         img= pygame.transform.scale(img, (tile_size, tile_size))
         img_list.append(img)
 
@@ -38,7 +38,7 @@ def main():
         pygame.draw.line(tela, BRANCO,(0,400),(800,400))
 
     #Cores para utilizar
-    BG=(135,206,235)
+    BG=(135,206,234)
     BRANCO=(255,255,255)
 
 
@@ -61,14 +61,14 @@ def main():
                     #Lembrar que dependendo da nossa animação do personagem podemos aumentar range
                     #Aqui é feito animação do personagem andando(flip de imagens)
                     for i in range(2):
-                        img1 = pygame.image.load(f"C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/Personagem/{i}.png")
+                        img1 = pygame.image.load(f"Imagens/Personagem/{i}.png")
                         img1 = pygame.transform.scale(img1, (int(img1.get_width() * scale), int(img1.get_height() * scale)))
                         temp_list.append(img1)
                     self.animation_list.append(temp_list)
                     temp_list=[]
                     #Aqui é feito animação do personagem parado(flip de imagens)
                     for i in range(1):
-                        img1 = pygame.image.load(f"C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/Personagem-Parado/{i}.png")
+                        img1 = pygame.image.load(f"Imagens/Personagem-Parado/{i}.png")
                         img1 = pygame.transform.scale(img1, (int(img1.get_width() * scale), int(img1.get_height() * scale)))
                         temp_list.append(img1)
                     self.animation_list.append(temp_list)
@@ -162,12 +162,12 @@ def main():
     #Lista csv de tiles para criar o cenário
 
     world_data= []
-    for row in range(Linhas):
-        r=[-1]*Colunas
+    for row in range(ROWS):
+        r=[-1]*COLS
         world_data.append(r)
 
     #Load do mundo a partir do csv
-    with open('C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/level1.csv', newline='') as csvfile:
+    with open('Imagens/level1.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
         for x, row in enumerate(reader):
             for y, tile in enumerate(row):
@@ -228,3 +228,4 @@ main()
 #Obstaculos
 #Tela de entrada
 #Fazer os outros 3 niveis
+#d
