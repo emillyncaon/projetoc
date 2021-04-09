@@ -168,7 +168,7 @@ def main():
 
     #Load do mundo a partir do csv
     with open('C:/Users/gusta/Documents/PETEEL/ProjetoC/Imagens/level1.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=';')
+        reader = csv.reader(csvfile, delimiter=',')
         for x, row in enumerate(reader):
             for y, tile in enumerate(row):
                 world_data[x][y]=(tile)
