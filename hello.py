@@ -1,10 +1,29 @@
 import pygame
 import os
+import random
 import csv
+game_map = [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','2','2','2','2','2','0','0','0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','1','1','1'],
+            ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
+            ['1','1','2','2','2','2','2','2','2','2','2','2','2','2','2','2','2','1','1','1','1','1'],
+            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
+            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
+            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
+            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1'],
+            ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1']]
+
+grass_image = pygame.image.load('Imagens/Tiles/grass.png')
+TILE_SIZE = grass_image.get_width()
+
+dirt_image = pygame.image.load('Imagens/Tiles/dirt.png')
 
 def main():
     pygame.init()
-    tela=pygame.display.set_mode([800, 640])              #Resolução
+    tela=pygame.display.set_mode([600, 400])              #Resolução
     pygame.display.set_caption("We have to decide yett!")  #nome jogo(A ser decidido)
 
     #Variaveis de movimentação
@@ -25,21 +44,16 @@ def main():
     tile_types=5   #Com todas as imagens, aumentar aqui
     level=1        #Possibilidade de acrescentar mais
 
-    #Criar uma lista de Tiles
-    img_list=[]
-    for x in range(tile_types):
-        img= pygame.image.load(f'Imagens/Tiles/{x}.png')
-        img= pygame.transform.scale(img, (tile_size, tile_size))
-        img_list.append(img)
+    #Cores para utilizar
+    BG=(135,206,234)
+    BRANCO=(255,255,255)
 
     #Cria um background
     def draw_bg():
         tela.fill(BG)
         pygame.draw.line(tela, BRANCO,(0,400),(800,400))
 
-    #Cores para utilizar
-    BG=(135,206,234)
-    BRANCO=(255,255,255)
+    
 
 
     #Funções para jogador
@@ -129,62 +143,43 @@ def main():
         def draw(self):
             tela.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
-    #Criação do mapa com tiles
-    class World():
-        def __init__(self):
-            self.obstacle_list=[]
+    
 
-        def process_data(self, data):
-            #olhar todos os valores
-            for y, row in enumerate(data):
-                for x, tile in enumerate(row):
-                    if tile>=0:
-                        img=img_list[tile]
-                        img_rect=img.get_rect()
-                        img_rect.x=x*tile_size
-                        img_rect.y=y*tile_size
-                        tile_data=(img, img_rect)
-                        if tile >=0 and tile <=5:
-                            self.obstacle_list.append(tile_data)
-                        #elif tile >=9 and tile <=10:
-                            #pass #Colocar lava ou agua aqui
-                        #elif tile >=11 and tile<=14:
-                            #pass #Decoração
-                        #elif tile==20:
-                            #pass #Saida
-        def draw(self):
-            for tile in self.obstacle_list:
-                screen.blit(tile[0],tile[1])
-
+   
     
     player=PP(200,200,0.3,5)
    
-    #Lista csv de tiles para criar o cenário
 
-    world_data= []
-    for row in range(ROWS):
-        r=[-1]*COLS
-        world_data.append(r)
 
-    #Load do mundo a partir do csv
-    with open('Imagens/level1.csv', newline='') as csvfile:
-        reader = csv.reader(csvfile, delimiter=',')
-        for x, row in enumerate(reader):
-            for y, tile in enumerate(row):
-                world_data[x][y]=(tile)
+
     
-    world=World()
 
     sair=False
     #Estrutura para fechar jogo
     while sair==False:
+        tela.fill((146,244,255))
+        tile_rects = []
+        #Novo
+        y = 0
+        for row in game_map:
+            x = 0
+            for tile in row:
+              if tile == '1':
+                tela.blit(dirt_image, (x * TILE_SIZE, y * TILE_SIZE))
+              if tile == '2':
+                tela.blit(grass_image, (x * TILE_SIZE, y * TILE_SIZE))
+              if tile != '0':
+                tile_rects.append(pygame.Rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE))
+              x += 1
+            y += 1
+        #_________________________________________________________________________________________
 
         clock.tick(fps)
-        draw_bg()                  #chama background
-        world.draw()               #chama world
+     
+        
         player.update_animation()  #faz o update a partir dos fps
         player.draw()              #chama jogador      
-        pygame.display.update()
+        
 
         if player.alive:
             if moving_left or moving_right:
@@ -210,9 +205,11 @@ def main():
                 if event.key == pygame.K_a:
                     moving_left=False
                 if event.key == pygame.K_d:
-                    moving_right=False           
+                    moving_right=False 
 
+        pygame.display.update()          
 
+         
     pygame.quit()
 
 main()
