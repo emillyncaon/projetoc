@@ -2,21 +2,23 @@ import pygame
 import os
 import random
 game_map = [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-            ['0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','20','0'],
-            ['0','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2'],
-            ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
-            ['1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1'],
-            ['1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1'],
-            ['1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1'],
-            ['1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
-            ['1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
-            ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
+           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','20','0'],
+           ['0','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2'],
+           ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
+           ['1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1'],
+           ['1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
+
+
 
 #Inicialização Blocos
 tile_size=40
@@ -47,6 +49,11 @@ signr_image = pygame.transform.scale(signr_image, (tile_size, tile_size))
 signl_image = pygame.image.load('Imagens/Tiles/22.png')
 signl_image = pygame.transform.scale(signl_image, (tile_size, tile_size))
 
+pine1_image = pygame.image.load('Imagens/Background/pine1.png')
+pine2_image = pygame.image.load('Imagens/Background/pine2.png')
+mountain_image = pygame.image.load('Imagens/Background/mountain.png')
+sky_image = pygame.image.load('Imagens/Background/sky.png')
+
 def main():
     pygame.init()
     tela=pygame.display.set_mode([800, 640])              #Resolução
@@ -63,12 +70,34 @@ def main():
     #Gravidade
     GRAVITY=0.5
 
-    #Config Tile 
-    #ROWS=16
-    #COLS=150
-    #tile_size=40
-    #tile_types=5   #Com todas as imagens, aumentar aqui
-    #level=1        #Possibilidade de acrescentar mais
+#    def load_map(path):
+#      f=open(path + '.txt','r')
+#      data=f.read()
+#      f.close()
+#      data=data.split('\n')
+#      game_map=[]
+#      for row in data:
+#        game_map.append(list(row))
+#      return game_map
+#
+#    game_map=load_map('Imagens/map')
+
+    def draw_bg():
+      tela.blit(sky_image, (0,0))
+      tela.blit(mountain_image, (0,100))
+      tela.blit(pine1_image, (0,230))
+      tela.blit(pine2_image, (0,290))
+
+    #Config Tile
+    screen_width=800
+    screen_height=640
+    SCROLL_THRESH=150 
+    ROWS=16
+    COLS=150
+    tile_size=40
+    tile_types=5   #Com todas as imagens, aumentar aqui
+    scroll=[0,0]
+    level=1        #Possibilidade de acrescentar mais
 
     #Funções para jogador
     class PP(pygame.sprite.Sprite):
@@ -109,6 +138,7 @@ def main():
 
         #Definições de movimentação
         def move(self, moving_left,moving_right):
+            screen_scroll=0
             dx=0
             dy=0
             if moving_left:
@@ -150,7 +180,7 @@ def main():
 
             self.rect.x += dx
             self.rect.y += dy
-        
+
         def update_animation(self):
             #Arrumar COOLDOWN dependendo das novas PNGS para o personagem
             #Isso aqui é feito para quando acabar as imagens voltar para imagem zero e assim ir fazendo o loop
@@ -171,13 +201,13 @@ def main():
         def draw(self):
             tela.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
-    player=PP(200,200,0.16,5)
+    player=PP(200,200,1.5,5)
 
     sair=False
     #Estrutura para fechar jogo
     while sair==False:
-        tela.fill((146,244,255))
-        
+        scroll[0] += (player.rect.x - scroll[0])
+        draw_bg()
         tile_rects = []
         tile_lava = []
         y = 0
@@ -185,35 +215,35 @@ def main():
             x = 0
             for tile in row:
               if tile == '1':
-                tela.blit(dirt_image, (x * tile_size, y * tile_size))
+                tela.blit(dirt_image, ( x * tile_size-scroll[0], y * tile_size))
               if tile == '2':
-                tela.blit(grass_image, (x * tile_size, y * tile_size))
+                tela.blit(grass_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '3':
-                tela.blit(rockdirt_image, (x * tile_size, y * tile_size))
+                tela.blit(rockdirt_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '4':
-                tela.blit(sand_image, (x * tile_size, y * tile_size))
+                tela.blit(sand_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '5':
-                tela.blit(snow_image, (x * tile_size, y * tile_size))
+                tela.blit(snow_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '6':
-                tela.blit(rock_image, (x * tile_size, y * tile_size))
+                tela.blit(rock_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '14':
-                tela.blit(water_image, (x * tile_size, y * tile_size))
+                tela.blit(water_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '15':
-                tela.blit(waterf_image, (x * tile_size, y * tile_size))
+                tela.blit(waterf_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '16':
-                tela.blit(lava_image, (x * tile_size, y * tile_size))
+                tela.blit(lava_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '17':
-                tela.blit(lavaf_image, (x * tile_size, y * tile_size))              
+                tela.blit(lavaf_image, (x * tile_size-scroll[0], y * tile_size))              
               if tile == '20':
-                tela.blit(signexit_image, (x * tile_size, y * tile_size))
+                tela.blit(signexit_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '21':
-                tela.blit(signr_image, (x * tile_size, y * tile_size))
+                tela.blit(signr_image, (x * tile_size-scroll[0], y * tile_size))
               if tile == '22':
-                tela.blit(signl_image, (x * tile_size, y * tile_size))
+                tela.blit(signl_image, (x * tile_size-scroll[0], y * tile_size))
                
               if (tile<'7')and(tile!='0'):
                 tile_rects.append(pygame.Rect(x * tile_size, y * tile_size, tile_size, tile_size))
-                
+
               if (tile=='16')or(tile=='17'):
                 tile_lava.append(pygame.Rect(x * tile_size, y * tile_size, tile_size, tile_size))
               x += 1
