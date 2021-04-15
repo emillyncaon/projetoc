@@ -8,15 +8,15 @@ game_map = [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'
            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
            ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','20','0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','20','0'],
-           ['0','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2'],
+           ['0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['0','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
            ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
            ['1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1'],
            ['1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1'],
            ['1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1'],
-           ['1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1''1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
            ['1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
-           ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
+           ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
 
 
 
@@ -65,7 +65,7 @@ def main():
 
     #Framerate
     clock=pygame.time.Clock()
-    fps=60
+    fps=120
 
     #Gravidade
     GRAVITY=0.5
@@ -83,21 +83,23 @@ def main():
 #    game_map=load_map('Imagens/map')
 
     def draw_bg():
-      tela.blit(sky_image, (0,0))
-      tela.blit(mountain_image, (0,100))
-      tela.blit(pine1_image, (0,230))
-      tela.blit(pine2_image, (0,290))
+      width=sky_image.get_width()
+      for x in range(5):
+        tela.blit(sky_image, ((x*width)-bg_scroll*0.5,0))
+        tela.blit(mountain_image, ((x*width)-bg_scroll*0.6,100))
+        tela.blit(pine1_image, ((x*width)-bg_scroll*0.7,230))
+        tela.blit(pine2_image, ((x*width)-bg_scroll*0.8,290))
 
     #Config Tile
     screen_width=800
     screen_height=640
-    SCROLL_THRESH=150 
     ROWS=16
     COLS=150
     tile_size=40
     tile_types=5   #Com todas as imagens, aumentar aqui
-    scroll=[0,0]
     level=1        #Possibilidade de acrescentar mais
+    screen_scroll=0
+    bg_scroll=0
 
     #Funções para jogador
     class PP(pygame.sprite.Sprite):
@@ -162,7 +164,7 @@ def main():
             dy += self.vel_y
 
 
-            for g in range(100):
+            for g in range(200):
                 #check collision in the x direction
                 if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
                     dx = 0
@@ -201,12 +203,24 @@ def main():
         def draw(self):
             tela.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
 
-    player=PP(0,0,1.8,5)
+    player=PP(320,0,1.8,5)
 
     sair=False
     #Estrutura para fechar jogo
     while sair==False:
-        scroll[0] += (1/3)*player.rect.x-scroll[0]
+        
+        #scroll[0] += 1/5*player.rect.x-scroll[0]
+    
+        if (player.rect.right > 390):
+          player.rect.x -= player.speed
+          screen_scroll += - player.speed
+          bg_scroll -= - player.speed
+        if (player.rect.right < 280):
+          player.rect.x += player.speed
+          screen_scroll -= - player.speed
+          bg_scroll += - player.speed
+
+
         draw_bg()
         tile_rects = []
         tile_lava = []
@@ -215,37 +229,37 @@ def main():
             x = 0
             for tile in row:
               if tile == '1':
-                tela.blit(dirt_image, ( x * tile_size-scroll[0], y * tile_size))
+                tela.blit(dirt_image, ( x * tile_size+screen_scroll, y * tile_size))
               if tile == '2':
-                tela.blit(grass_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(grass_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '3':
-                tela.blit(rockdirt_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(rockdirt_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '4':
-                tela.blit(sand_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(sand_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '5':
-                tela.blit(snow_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(snow_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '6':
-                tela.blit(rock_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(rock_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '14':
-                tela.blit(water_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(water_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '15':
-                tela.blit(waterf_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(waterf_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '16':
-                tela.blit(lava_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(lava_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '17':
-                tela.blit(lavaf_image, (x * tile_size-scroll[0], y * tile_size))              
+                tela.blit(lavaf_image, (x * tile_size+screen_scroll, y * tile_size))              
               if tile == '20':
-                tela.blit(signexit_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(signexit_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '21':
-                tela.blit(signr_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(signr_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '22':
-                tela.blit(signl_image, (x * tile_size-scroll[0], y * tile_size))
+                tela.blit(signl_image, (x * tile_size+screen_scroll, y * tile_size))
                
               if (tile<'7')and(tile!='0'):
-                tile_rects.append(pygame.Rect(x * tile_size-scroll[0], y * tile_size, tile_size, tile_size))
+                tile_rects.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
 
               if (tile=='16')or(tile=='17'):
-                tile_lava.append(pygame.Rect(x * tile_size-scroll[0], y * tile_size, tile_size, tile_size))
+                tile_lava.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
               x += 1
             y += 1
 
@@ -260,7 +274,7 @@ def main():
             else: 
                 player.update_action(1)
 
-            player.move(moving_left,moving_right)
+        player.move(moving_left,moving_right)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
