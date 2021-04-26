@@ -1,21 +1,57 @@
 import pygame
 import os
 import random
-game_map = [['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0'],
-           ['0','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+#import button
+
+game_map = [['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
            ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
            ['1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1'],
            ['1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1'],
            ['1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1'],
-           ['1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
-           ['1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','0','0','0','0','0','1','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','2','2','2','2','2','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
+
+game_map2 = [['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+           ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
+           ['1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1'],
+           ['1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','0','0','0','0','0','1','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','2','2','2','2','2','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
+
+game_map3 = [['1','0','1','1','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','1','0','0','1','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','1','1','1','1','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','1','0','1','1','0','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','0','0','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','2','2','0','0','0','0','0','0','0','0','0','0','0','0','0'],
+           ['1','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','21','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','20','0','2','2','2','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
+           ['2','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1'],
+           ['1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','0','0','0','2','2','1','1','1','1','1'],
+           ['1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','2','0','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','0','0','0','0','0','2','1','1','1','1','1','1','1','1'],
+           ['1','1','1','0','0','0','0','0','0','0','0','0','0','1','1','1','1','1','1','1','1','1','1','1','0','0','0','0','0','2','2','16','16','2','1','1','1','1','1','1','1','1','1'],
+           ['1','1','1','2','2','2','2','2','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','2','2','2','2','2','1','1','17','17','1','1','1','1','1','1','1','1','1','1'],
            ['1','1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1''1','1','1','1','1','1','1','1','1','17','17','1','1','1','1','1','1','1','1','1','1']]
 
 
@@ -54,6 +90,10 @@ pine2_image = pygame.image.load('Imagens/Background/pine2.png')
 mountain_image = pygame.image.load('Imagens/Background/mountain.png')
 sky_image = pygame.image.load('Imagens/Background/sky.png')
 
+#Imagem do botão restart
+#restart_image = pygame.image.load('Imagens/Outros/Restart.png')
+
+
 def main():
     pygame.init()
     tela=pygame.display.set_mode([800, 640])              #Resolução
@@ -70,25 +110,34 @@ def main():
     #Gravidade
     GRAVITY=0.5
 
-#    def load_map(path):
-#      f=open(path + '.txt','r')
-#      data=f.read()
-#      f.close()
-#      data=data.split('\n')
-#      game_map=[]
-#      for row in data:
-#        game_map.append(list(row))
-#      return game_map
-#
-#    game_map=load_map('Imagens/map')
-
     def draw_bg():
-      width=sky_image.get_width()
-      for x in range(5):
-        tela.blit(sky_image, ((x*width)-bg_scroll*0.5,0))
-        tela.blit(mountain_image, ((x*width)-bg_scroll*0.6,100))
-        tela.blit(pine1_image, ((x*width)-bg_scroll*0.7,230))
-        tela.blit(pine2_image, ((x*width)-bg_scroll*0.8,290))
+      if level==1:
+        width=sky_image.get_width()
+        for x in range(5):
+          tela.blit(sky_image, ((x*width)-bg_scroll*0.5,0))
+          tela.blit(mountain_image, ((x*width)-bg_scroll*0.6,100))
+          tela.blit(pine1_image, ((x*width)-bg_scroll*0.7,230))
+          tela.blit(pine2_image, ((x*width)-bg_scroll*0.8,290))
+      if level==2:
+        width=sky_image.get_width()
+        for x in range(5):
+          tela.blit(sky_image, ((x*width)-bg_scroll*0.5,0))
+          tela.blit(mountain_image, ((x*width)-bg_scroll*0.6,100))
+          tela.blit(pine1_image, ((x*width)-bg_scroll*0.7,230))
+          tela.blit(pine2_image, ((x*width)-bg_scroll*0.8,290))
+      if level==3:
+        width=sky_image.get_width()
+        for x in range(5):
+          tela.blit(sky_image, ((x*width)-bg_scroll*0.5,0))
+          tela.blit(mountain_image, ((x*width)-bg_scroll*0.6,100))
+          tela.blit(pine1_image, ((x*width)-bg_scroll*0.7,230))
+          tela.blit(pine2_image, ((x*width)-bg_scroll*0.8,290))
+    
+    ##Função para resetar o nível!
+    #def reset_level():
+    #  
+    #  #criar uma lista vazia do mundo
+    #  game_map=[]
 
     #Config Tile
     screen_width=800
@@ -100,13 +149,17 @@ def main():
     level=1        #Possibilidade de acrescentar mais
     screen_scroll=0
     bg_scroll=0
+    passagem=False
 
     #Funções para jogador
     class PP(pygame.sprite.Sprite):
-        def __init__(self, x, y, scale, speed):
+        def __init__(self, char_type, x, y, scale, speed):
                     pygame.sprite.Sprite.__init__(self)
                     self.alive = True
                     self.speed=speed
+                    self.char_type = char_type
+                    self.health = 100
+                    self.max_health = self.health
                     self.direction=1
                     self.vel_y=0
                     self.jump =False
@@ -120,14 +173,15 @@ def main():
                     #Lembrar que dependendo da nossa animação do personagem podemos aumentar range
                     #Aqui é feito animação do personagem andando(flip de imagens)
                     for i in range(2):
-                        img1 = pygame.image.load(f"Imagens/Personagem/{i}.png")
+                        img1 = pygame.image.load(f"Imagens/{char_type}/{i}.png")
                         img1 = pygame.transform.scale(img1, (int(img1.get_width() * scale), int(img1.get_height() * scale)))
                         temp_list.append(img1)
+           
                     self.animation_list.append(temp_list)
                     temp_list=[]
                     #Aqui é feito animação do personagem parado(flip de imagens)
                     for i in range(1):
-                        img1 = pygame.image.load(f"Imagens/Personagem-Parado/{i}.png")
+                        img1 = pygame.image.load(f"Imagens/{self.char_type}-Parado/{i}.png")
                         img1 = pygame.transform.scale(img1, (int(img1.get_width() * scale), int(img1.get_height() * scale)))
                         temp_list.append(img1)
                     self.animation_list.append(temp_list)
@@ -136,7 +190,14 @@ def main():
                     self.rect.center = (x, y)
                     self.width=self.image.get_width()
                     self.height=self.image.get_height()
+                    
+                    #AI Variaveis
+                    self.move_counter=0
+                    self.idling=False
+                    self.idling_counter=0
 
+        def update(self):
+		                self.check_alive()    
 
         #Definições de movimentação
         def move(self, moving_left,moving_right):
@@ -164,24 +225,55 @@ def main():
             dy += self.vel_y
 
 
-            for g in range(200):
-                #check collision in the x direction
-                if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
-                    dx = 0
-                #check for collision in the y direction
-                if tile_rects[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
-                    #check if below the ground, i.e. jumping
-                    if self.vel_y < 0:
-                        self.vel_y = 0
-                        dy = tile_rects[g].bottom - self.rect.top
-                    #check if above the ground, i.e. falling
-                    elif self.vel_y >= 0:
-                        self.vel_y = 0
-                        self.in_air = False
-                        dy = tile_rects[g].top - self.rect.bottom
+            if self.char_type=='Personagem':
+               for g in range(200):
+                   #check collision in the x direction
+                   if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
+                       dx = 0
+                   #check for collision in the y direction
+                   if tile_rects[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                       #check if below the ground, i.e. jumping
+                       if self.vel_y < 0:
+                           self.vel_y = 0
+                           dy = tile_rects[g].bottom - self.rect.top
+                       #check if above the ground, i.e. falling
+                       elif self.vel_y >= 0:
+                           self.vel_y = 0
+                           self.in_air = False
+                           dy = tile_rects[g].top - self.rect.bottom
 
+            if self.char_type=='Professor':            
+             for g in range(200):
+                 #check collision in the x direction
+                 if tile_rects_ini[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
+                     dx = 0
+                 #check for collision in the y direction
+                 if tile_rects_ini[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                     #check if below the ground, i.e. jumping
+                     if self.vel_y < 0:
+                         self.vel_y = 0
+                         dy = tile_rects[g].bottom - self.rect.top
+                     #check if above the ground, i.e. falling
+                     elif self.vel_y >= 0:
+                         self.vel_y = 0
+                         self.in_air = False
+                         dy = tile_rects[g].top - self.rect.bottom
+          
+            #Checagem Lava -- Mudei a condição do arthur um puco
+            if self.char_type=='Personagem':
+               for g in range(10):
+                   #check collision in the x direction
+                   if tile_lava[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
+                       dx = 0
+                       self.health=0
+                   #check for collision in the y direction
+                   if tile_lava[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                       dy=0
+                       self.health=0
+               if self.rect.y>650:
+                 self.health=0
             self.rect.x += dx
-            self.rect.y += dy
+            self.rect.y += dy 
 
         def update_animation(self):
             #Arrumar COOLDOWN dependendo das novas PNGS para o personagem
@@ -200,17 +292,54 @@ def main():
                 self.frame_index=0
                 self.update_time=pygame.time.get_ticks()
 
-        def draw(self):
-            tela.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
+        def check_alive(self):
+		        if self.health <= 0:
+			        self.health = 0
+			        self.speed = 0
+			        self.alive = False
 
-    player=PP(320,0,1.8,5)
+        def ai(self):
+          if player.alive:
+            if self.idling==False and random.randint(1, 200)==1:
+              self.update_action(1)
+              self.idling=True
+              self.idling_counter=50
+            if self.idling==False:
+              if self.direction==1:
+                ai_moving_right=True
+              else:
+                ai_moving_right=False
+              ai_moving_left=not ai_moving_right
+              self.move(ai_moving_left,ai_moving_right)
+              self.move_counter += 1 
+              self.update_action(0)
+              
+              if self.move_counter >tile_size:
+                self.direction*= -1
+                self.move_counter*=-1
+            else:
+              self.idling_counter -= 1
+              if self.idling_counter <=0:
+                self.idling=False
+
+        def draw(self):
+            tela.blit(pygame.transform.flip(self.image, self.flip, False),(self.rect.x,self.rect.y))
+
+        def drawAI(self):
+            tela.blit(pygame.transform.flip(self.image, self.flip, False),(self.rect.x+screen_scroll,self.rect.y))
+
+    #Jogador - Chamar
+    player=PP('Personagem',300,0,1.8,5)
+
+    #inimigos LEVEL1 - chamar
+    inimigo=PP('Professor',300,500,1.8,4)
+    inimigo2=PP('Professor',900,200,1.8,4)
 
     sair=False
     #Estrutura para fechar jogo
     while sair==False:
-        
-        #scroll[0] += 1/5*player.rect.x-scroll[0]
     
+        #ScreenScrool dinâmica
         if (player.rect.right > 390):
           player.rect.x -= player.speed
           screen_scroll += - player.speed
@@ -220,12 +349,22 @@ def main():
           screen_scroll -= - player.speed
           bg_scroll += - player.speed
 
-
+        #Troca de MAPA de acordo com o nível
+        if level==1:
+          variavel=game_map
+        if level==2:
+          variavel=game_map2
+        if level==3:
+          variavel=game_map3
+        
+        #Leitura dos NIVEIS
         draw_bg()
         tile_rects = []
         tile_lava = []
+        tile_rects_ini = []
+        tile_rects_placa=[]
         y = 0
-        for row in game_map:
+        for row in variavel:
             x = 0
             for tile in row:
               if tile == '1':
@@ -254,27 +393,66 @@ def main():
                 tela.blit(signr_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '22':
                 tela.blit(signl_image, (x * tile_size+screen_scroll, y * tile_size))
-               
-              if (tile<'7')and(tile!='0'):
+              #TileRect Append
+              if (tile == '1')or(tile == '2')or(tile == '3')or(tile == '4')or(tile == '5')or(tile == '6'):
                 tile_rects.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
-
-              if (tile=='16')or(tile=='17'):
+              #TileLava Append
+              if (tile=='17'):
                 tile_lava.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
+              #TileInimigos Append
+              if (tile == '1')or(tile == '2')or(tile == '3')or(tile == '4')or(tile == '5')or(tile == '6'):
+                tile_rects_ini.append(pygame.Rect(x * tile_size, y * tile_size, tile_size, tile_size))
+              #placa Passa missão
+              if (tile=='21'):
+                tile_rects_placa.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
               x += 1
             y += 1
 
-        clock.tick(fps)
-        
-        player.update_animation()  #faz o update a partir dos fps
-        player.draw()              #chama jogador      
+        #inimigos do LEVEL 1
+        if level==1:
+          inimigo.update_animation()
+          inimigo.ai()
+          inimigo.drawAI()
 
+          inimigo2.update_animation()
+          inimigo2.ai()
+          inimigo2.drawAI()
+
+        #JOGADOR
+        player.update_animation()  #faz o update a partir dos fps
+        player.update()
+        player.draw()              #chama jogador
+
+    
+        for g in range(2):
+           #check collision in the x direction
+           if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
+              screen_scroll=0
+              bg_scroll=0
+              passagem=True
+           #check for collision in the y direction
+           if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
+              passagem=True
+              screen_scroll=0
+              bg_scroll=0
+ 
+        if passagem==True:
+          level +=1
+          passagem=False
+                
+        print(level)  
+
+
+        #Teste Nivel
         if player.alive:
             if moving_left or moving_right:
                 player.update_action(0)
             else: 
                 player.update_action(1)
+            player.move(moving_left,moving_right)
 
-        player.move(moving_left,moving_right)
+        #FPS
+        clock.tick(fps)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -299,14 +477,3 @@ def main():
     pygame.quit()
 
 main()
-
-#1. Escolher personagem
-#2. Escolher blocos que vamos usar
-#3. Fazer mapa basico
-#4. Implementar mapa com scroll
-#5. Entrada e conclusão de nível colocar
-
-#Obstaculos
-#Tela de entrada
-#Fazer os outros 3 niveis
-#d
