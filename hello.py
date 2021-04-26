@@ -423,7 +423,7 @@ def main():
         player.update()
         player.draw()              #chama jogador
 
-    
+        #TROCA LEVELS
         for g in range(2):
            #check collision in the x direction
            if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
@@ -440,7 +440,12 @@ def main():
           level +=1
           passagem=False
                 
-        print(level)  
+        print(player.health) 
+
+        #CHOQUE Com Inimigos
+
+        if inimigo.rect.colliderect(player.rect.x, player.rect.y, player.width, player.height):
+              player.health=0        
 
 
         #Teste Nivel
