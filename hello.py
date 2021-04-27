@@ -444,8 +444,9 @@ def main():
 
         #CHOQUE Com Inimigos
 
-        if inimigo.rect.colliderect(player.rect.x, player.rect.y, player.width, player.height):
-              player.health=0        
+        #if inimigo.rect.colliderect(player.rect.x, player.rect.y, player.width, player.height):
+        #      #player.health=0
+        #  print("MORREU")      
 
 
         #Teste Nivel
