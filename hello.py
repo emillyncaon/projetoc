@@ -226,7 +226,9 @@ def main():
 
 
             if self.char_type=='Personagem':
-               for g in range(200):
+
+               for g in range(230):
+
                    #check collision in the x direction
                    if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
                        dx = 0
@@ -331,9 +333,14 @@ def main():
     #Jogador - Chamar
     player=PP('Personagem',300,0,1.8,5)
 
-    #inimigos LEVEL1 - chamar
-    inimigo=PP('Professor',300,500,1.8,4)
-    inimigo2=PP('Professor',900,200,1.8,4)
+    #Jogador - Chamar
+    player=PP('Personagem',300,0,1.8,5)
+
+    if level==1:
+      #inimigos LEVEL1 - chamar
+      inimigo1=PP('Professor',300,500,1.8,4)
+      inimigo2=PP('Professor',900,200,1.8,4)
+
 
     sair=False
     #Estrutura para fechar jogo
@@ -410,9 +417,10 @@ def main():
 
         #inimigos do LEVEL 1
         if level==1:
-          inimigo.update_animation()
-          inimigo.ai()
-          inimigo.drawAI()
+
+          inimigo1.update_animation()
+          inimigo1.ai()
+          inimigo1.drawAI()
 
           inimigo2.update_animation()
           inimigo2.ai()
@@ -440,13 +448,20 @@ def main():
           level +=1
           passagem=False
                 
-        print(player.health) 
-
-        #CHOQUE Com Inimigos
-
-        #if inimigo.rect.colliderect(player.rect.x, player.rect.y, player.width, player.height):
-        #      #player.health=0
-        #  print("MORREU")      
+        #print(player.health)
+        real_time_x_player=player.rect.x-screen_scroll
+        #CHOQUE Com Inimigos LEVEL1        
+        if level==1:
+          inim_level_1=[inimigo1, inimigo2]
+          for x in range(2):
+            if inim_level_1[x].rect.x>real_time_x_player:
+              if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
+                player.health=0
+                print("MORREU")
+            if real_time_x_player>inim_level_1[x].rect.x:
+              if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
+                player.health=0
+                print("MORREU")
 
 
         #Teste Nivel
@@ -482,4 +497,6 @@ def main():
  
     pygame.quit()
 
+
 main()
+
