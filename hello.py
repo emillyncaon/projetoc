@@ -175,10 +175,11 @@ def main():
             dy += self.vel_y
 
 
-            for g in range(200):
+            for g in range(len(tile_rects)):
                 #check collision in the x direction
                 if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
-                    dx = 0
+                  dx = 0
+                  
                 #check for collision in the y direction
                 if tile_rects[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
                     #check if below the ground, i.e. jumping
@@ -186,29 +187,33 @@ def main():
                         self.vel_y = 0
                         dy = tile_rects[g].bottom - self.rect.top
                     #check if above the ground, i.e. falling
-                    elif self.vel_y >= 0:
+                    else:
                         self.vel_y = 0
                         self.in_air = False
                         dy = tile_rects[g].top - self.rect.bottom
+
 
             if self.rect.bottom>screen_height:
               self.health = 0
             if self.rect.bottom<0:
               self.health=0
 
-            for l in range(10):
+            for l in range(len(tile_lava)):
                 if tile_lava[l].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
-                    player.health=0
                     dx = 0
-                if tile_rects[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                    self.health = 0
+                if tile_rects[l].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
                     if self.vel_y < 0:
                         self.vel_y = 0
-                        dy = tile_rects[g].bottom - self.rect.top
-                        player.health=0        
-                    elif self.vel_y >= 0:
+                        dy = tile_rects[l].bottom - self.rect.top
+                        self.health = 0
+
+                    else:
                         self.vel_y = 0
                         self.in_air = False
-                        dy = tile_rects[g].top - self.rect.bottom
+                        dy = tile_rects[l].top - self.rect.bottom
+                        self.health = 0
+
 
 
 
@@ -238,6 +243,7 @@ def main():
 			        self.speed = 0
 			        self.alive = False
 			        self.update_action(3)
+              
         
         def draw(self):
             tela.blit(pygame.transform.flip(self.image, self.flip, False),self.rect)
@@ -249,11 +255,10 @@ def main():
 
     player=PP(320,0,1.8,5)
 
-    lava_group = pygame.sprite.Group()
 
     sair=False
     #Estrutura para fechar jogo
-    while sair==False:
+    while sair==False: #and player.health != 0: 
         
         #scroll[0] += 1/5*player.rect.x-scroll[0]
     
@@ -271,6 +276,8 @@ def main():
         tile_rects = []
         tile_lava = []
         y = 0
+
+
         for row in game_map:
             x = 0
             for tile in row:
@@ -292,7 +299,6 @@ def main():
                 tela.blit(waterf_image, (x * tile_size+screen_scroll, y * tile_size))
               if tile == '16':
                 tela.blit(lava_image, (x * tile_size+screen_scroll, y * tile_size))
-                #lava_group.add()
               if tile == '17':
                 tela.blit(lavaf_image, (x * tile_size+screen_scroll, y * tile_size))              
               if tile == '20':
@@ -305,7 +311,7 @@ def main():
               if (tile<'7')and(tile!='0') and (tile !='16') and (tile != '17'):
                 tile_rects.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
 
-              if (tile=='16')or(tile=='17'):
+              elif (tile=='16')or(tile=='17'):
                 tile_lava.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
               x += 1
             y += 1
@@ -313,14 +319,25 @@ def main():
         clock.tick(fps)
         
         player.update_animation()  #faz o update a partir dos fps
-        player.update()
-        player.draw()              #chama jogador      
+        #player.update()
+        player.draw()              #chama jogador  
 
-        if player.alive:
+
+        if player.health != 0:
             if moving_left or moving_right:
                 player.update_action(0)
             else: 
                 player.update_action(1)
+        else: 
+            screen_scroll=0
+            bg_scroll = 0
+            #tela.fill((0, 0, 0))
+            player.health=100
+            player.rect.y = 200
+
+
+
+
 
         player.move(moving_left,moving_right)
 
