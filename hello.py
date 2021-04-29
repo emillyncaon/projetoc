@@ -226,7 +226,9 @@ def main():
 
 
             if self.char_type=='Personagem':
+
                for g in range(230):
+
                    #check collision in the x direction
                    if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
                        dx = 0
@@ -331,11 +333,14 @@ def main():
     #Jogador - Chamar
     player=PP('Personagem',300,0,1.8,5)
 
+    #Jogador - Chamar
+    player=PP('Personagem',300,0,1.8,5)
 
     if level==1:
       #inimigos LEVEL1 - chamar
       inimigo1=PP('Professor',300,500,1.8,4)
       inimigo2=PP('Professor',900,200,1.8,4)
+
 
     sair=False
     #Estrutura para fechar jogo
@@ -412,6 +417,7 @@ def main():
 
         #inimigos do LEVEL 1
         if level==1:
+
           inimigo1.update_animation()
           inimigo1.ai()
           inimigo1.drawAI()
@@ -457,6 +463,7 @@ def main():
                 player.health=0
                 print("MORREU")
 
+
         #Teste Nivel
         if player.alive:
             if moving_left or moving_right:
@@ -490,4 +497,6 @@ def main():
  
     pygame.quit()
 
+
 main()
+
