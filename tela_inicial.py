@@ -17,8 +17,13 @@ main_menu = True
 #load images
 fundo_img = pygame.image.load('imagens_tela_inicial/fundo.png')
 jogar_img = pygame.image.load('imagens_tela_inicial/jogar.png')
+jogar_img = pygame.transform.scale(jogar_img, (int(jogar_img.get_width() * 1), int(jogar_img.get_height() * 1)))
 sobre_img = pygame.image.load('imagens_tela_inicial/sobre.png')
 comojogar_img = pygame.image.load('imagens_tela_inicial/comojogar.png')
+personagem1_img = pygame.image.load('imagens_tela_inicial/personagem1.png')
+personagem1_img = pygame.transform.scale(personagem1_img, (int(personagem1_img.get_width() * 4), int(personagem1_img.get_height() * 4)))
+personagem2_img = pygame.image.load('imagens_tela_inicial/personagem2.png')
+personagem2_img = pygame.transform.scale(personagem2_img, (int(personagem2_img.get_width() * 4), int(personagem2_img.get_height() * 4)))
 
 class Button():
     def __init__(self, x, y, image):
@@ -50,27 +55,35 @@ class Button():
         return action
 
 #buttons
-jogar_button = Button(tela_width // 2 - 50, tela_height // 3 - 50, jogar_img)
-comojogar_button = Button(tela_width // 2 - 65, tela_height // 4 - 65, comojogar_img)
-sobre_button = Button(tela_width // 2 - 50, tela_height // 2 - 80, sobre_img)
+jogar_button = Button(tela_width // 2 - 50, tela_height // 1 - 200, jogar_img)
+comojogar_button = Button(tela_width // 1 - 275, tela_height // 1 - 200, comojogar_img)
+sobre_button = Button(tela_width // 2 - 235, tela_height // 1 - 193, sobre_img)
+personagem1_button = Button(tela_width // 2 - 150, tela_height // 2 - 75, personagem1_img)
+personagem2_button = Button(tela_width // 2 + 20, tela_height // 2 - 75, personagem2_img)
 
 
-
+flag=0
 run = True
 while run: 
     
     clock.tick(fps)
-
     tela.blit(fundo_img, (0, 0))
 
-
     if main_menu == True:
+        #draw menu
         if jogar_button.draw():
-            main_menu = False
+            if (flag==1):
+                main_menu = False
         if sobre_button.draw():
-            run = False
+            if (flag==0):
+                run = False
         if comojogar_button.draw():
-            main_menu = True
+            if (flag==0):
+                main_menu = False
+        if personagem1_button.draw():
+            flag = 1
+        if personagem2_button.draw():
+            flag = 1
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
