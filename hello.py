@@ -198,9 +198,6 @@ def main():
   
         def update(self):
 		                self.update_animation()
-		                self.check_alive()
-                  
- 
 
         #Definições de movimentação
         def move(self, moving_left,moving_right):
@@ -308,10 +305,8 @@ def main():
 
         def check_alive(self):
 		        if self.health <= 0:
-			        self.health = 0
 			        self.speed = 0
 			        self.alive = False
-			        self.update_action(3)
               
         
         def ai(self):
@@ -487,8 +482,7 @@ def main():
             else: 
                 player.update_action(1)
                 
-        if player.health != 0:
-        else: 
+        if player.health == 100:
             screen_scroll=0
             bg_scroll = 0
             tela.fill((0, 0, 0))
@@ -514,11 +508,11 @@ def main():
                 sair=True
             #Movimentação
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
+                if event.key == pygame.K_a and player.health == 100:
                     moving_left= True
-                if event.key == pygame.K_d:
+                if event.key == pygame.K_d and player.health == 100:
                     moving_right=True
-                if event.key == pygame.K_w and player.alive:
+                if event.key == pygame.K_w and player.health == 100:
                     player.jump=True
                 if event.key == pygame.K_r and player.health == 0:
                     restart = True
