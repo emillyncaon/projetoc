@@ -1,7 +1,6 @@
 import pygame
 import os
 import random
-#import button
 
 game_map = [['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
            ['1','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'],
@@ -102,6 +101,7 @@ def main():
     #Variaveis de movimentação
     moving_left = False
     moving_right = False
+    restart = False
 
     #Framerate
     clock=pygame.time.Clock()
@@ -195,9 +195,12 @@ def main():
                     self.move_counter=0
                     self.idling=False
                     self.idling_counter=0
-
+  
         def update(self):
-		                self.check_alive()    
+		                self.update_animation()
+		                self.check_alive()
+                  
+ 
 
         #Definições de movimentação
         def move(self, moving_left,moving_right):
@@ -227,7 +230,7 @@ def main():
 
             if self.char_type=='Personagem':
 
-               for g in range(230):
+               for g in range(len(tile_rects)):
 
                    #check collision in the x direction
                    if tile_rects[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
@@ -262,18 +265,27 @@ def main():
                          dy = tile_rects[g].top - self.rect.bottom
           
             #Checagem Lava -- Mudei a condição do arthur um puco
-            if self.char_type=='Personagem':
-               for g in range(10):
-                   #check collision in the x direction
-                   if tile_lava[g].colliderect(self.rect.x + dx, self.rect.y, self.width, self.height):
-                       dx = 0
-                       self.health=0
-                   #check for collision in the y direction
-                   if tile_lava[g].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
-                       dy=0
-                       self.health=0
-               if self.rect.y>650:
-                 self.health=0
+            for l in range(len(tile_lava)):
+                if tile_lava[l].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                    dx = 0
+                    self.health = 0
+                if tile_rects[l].colliderect(self.rect.x, self.rect.y + dy, self.width, self.height):
+                    if self.vel_y < 0:
+                        self.vel_y = 0
+                        dy = tile_rects[l].bottom - self.rect.top
+                        self.health = 0
+
+                    else:
+                        self.vel_y = 0
+                        self.in_air = False
+                        dy = tile_rects[l].top - self.rect.bottom
+                        self.health = 0
+                    
+            if self.rect.bottom<0:
+              self.health = 0
+            if self.rect.bottom>640:
+              self.health=0
+
             self.rect.x += dx
             self.rect.y += dy 
 
@@ -299,7 +311,9 @@ def main():
 			        self.health = 0
 			        self.speed = 0
 			        self.alive = False
-
+			        self.update_action(3)
+              
+        
         def ai(self):
           if player.alive:
             if self.idling==False and random.randint(1, 200)==1:
@@ -341,9 +355,10 @@ def main():
       inimigo1=PP('Professor',300,500,1.8,4)
       inimigo2=PP('Professor',900,200,1.8,4)
 
-
+      
     sair=False
     #Estrutura para fechar jogo
+    
     while sair==False:
     
         #ScreenScrool dinâmica
@@ -371,6 +386,7 @@ def main():
         tile_rects_ini = []
         tile_rects_placa=[]
         y = 0
+
         for row in variavel:
             x = 0
             for tile in row:
@@ -470,7 +486,25 @@ def main():
                 player.update_action(0)
             else: 
                 player.update_action(1)
-            player.move(moving_left,moving_right)
+                
+        if player.health != 0:
+        else: 
+            screen_scroll=0
+            bg_scroll = 0
+            tela.fill((0, 0, 0))
+            font = pygame.font.Font('freesansbold.ttf', 32)
+            text = font.render('Você errou, calouro! Aperte R para reiniciar', True, (255, 255, 255))
+            textRect = text.get_rect()
+            textRect.center = (screen_width//2, screen_height//2)
+            tela.blit(text, textRect)
+            if restart:
+              player.health=100
+              player.rect.y = 100
+
+
+
+        player.move(moving_left,moving_right)
+
 
         #FPS
         clock.tick(fps)
@@ -486,12 +520,17 @@ def main():
                     moving_right=True
                 if event.key == pygame.K_w and player.alive:
                     player.jump=True
+                if event.key == pygame.K_r and player.health == 0:
+                    restart = True
+                
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     moving_left=False
                 if event.key == pygame.K_d:
-                    moving_right=False 
+                    moving_right=False
+                if event.key == pygame.K_r:
+                    restart = False
 
         pygame.display.update()          
  
