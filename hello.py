@@ -482,7 +482,7 @@ def main():
             else: 
                 player.update_action(1)
                 
-        if player.health == 100:
+        if player.health == 0:
             screen_scroll=0
             bg_scroll = 0
             tela.fill((0, 0, 0))
