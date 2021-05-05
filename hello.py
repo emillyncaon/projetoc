@@ -89,6 +89,18 @@ pine2_image = pygame.image.load('Imagens/Background/pine2.png')
 mountain_image = pygame.image.load('Imagens/Background/mountain.png')
 sky_image = pygame.image.load('Imagens/Background/sky.png')
 
+#botões
+fundo_img = pygame.image.load('Imagens/tela/fundo.png')
+jogar_img = pygame.image.load('Imagens/tela/jogar.png')
+jogar_img = pygame.transform.scale(jogar_img, (int(jogar_img.get_width() * 1), int(jogar_img.get_height() * 1)))
+sobre_img = pygame.image.load('Imagens/tela/sobre.png')
+comojogar_img = pygame.image.load('Imagens/tela/comojogar.png')
+personagem1_img = pygame.image.load('Imagens/tela/personagem1.png')
+personagem1_img = pygame.transform.scale(personagem1_img, (int(personagem1_img.get_width() * 4), int(personagem1_img.get_height() * 4)))
+personagem2_img = pygame.image.load('Imagens/tela/personagem2.png')
+personagem2_img = pygame.transform.scale(personagem2_img, (int(personagem2_img.get_width() * 4), int(personagem2_img.get_height() * 4)))
+
+
 #Imagem do botão restart
 #restart_image = pygame.image.load('Imagens/Outros/Restart.png')
 
@@ -150,6 +162,48 @@ def main():
     screen_scroll=0
     bg_scroll=0
     passagem=False
+    #variavel jogo
+    main_menu = True
+    pers1=False
+    pers2=False
+
+    class Button():
+      def __init__(self, x, y, image):
+          self.image = image
+          self.rect = self.image.get_rect()
+          self.rect.x = x
+          self.rect.y = y
+          self.clicked = False
+
+      def draw(self):
+          action = False
+
+          #get mouse position
+          pos = pygame.mouse.get_pos()
+
+          #check mouseover and clicked conditions
+          if self.rect.collidepoint(pos):
+              if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:
+                  action = True
+                  self.clicked = True
+
+          if pygame.mouse.get_pressed()[0] == 0:
+              self.clicked = False
+
+
+          #draw button
+          tela.blit(self.image, self.rect)
+
+          return action
+
+    #botões
+    jogar_button = Button(screen_width // 2 - 50, screen_height // 1 - 200, jogar_img)
+    comojogar_button = Button(screen_width // 1 - 275, screen_height // 1 - 200, comojogar_img)
+    sobre_button = Button(screen_width // 2 - 235, screen_height // 1 - 193, sobre_img)
+    personagem1_button = Button(screen_width // 2 - 150, screen_height // 2 - 75, personagem1_img)
+    personagem2_button = Button(screen_width // 2 + 20, screen_height // 2 - 75, personagem2_img)
+    
+
 
     #Funções para jogador
     class PP(pygame.sprite.Sprite):
@@ -199,6 +253,7 @@ def main():
         def update(self):
 		                self.update_animation()
 
+                
         #Definições de movimentação
         def move(self, moving_left,moving_right):
             screen_scroll=0
@@ -225,7 +280,7 @@ def main():
             dy += self.vel_y
 
 
-            if self.char_type=='Personagem':
+            if self.char_type=='Personagem1' or self.char_type=='Personagem2':
 
                for g in range(len(tile_rects)):
 
@@ -284,7 +339,7 @@ def main():
               self.health=0
 
             self.rect.x += dx
-            self.rect.y += dy 
+            self.rect.y += dy
 
         def update_animation(self):
             #Arrumar COOLDOWN dependendo das novas PNGS para o personagem
@@ -338,167 +393,193 @@ def main():
 
         def drawAI(self):
             tela.blit(pygame.transform.flip(self.image, self.flip, False),(self.rect.x+screen_scroll,self.rect.y))
-
-    #Jogador - Chamar
-    player=PP('Personagem',300,0,1.8,5)
-
-    #Jogador - Chamar
-    player=PP('Personagem',300,0,1.8,5)
+    
+    #Persona_v='Personagem1'
+    def atualp():
+        print(pers1,pers2)
+        return(pers1, pers2, main_menu)
+    
+    #if pers1==True:
+    #  Persona_v='Personagem2'
+    #  print(Persona_v)
+    #if pers2==True:
+    #  Persona_v='Personagem2'
+    #  print(Persona_v)
+    player=PP('Personagem1',300,0,1.8,5)
 
     if level==1:
       #inimigos LEVEL1 - chamar
       inimigo1=PP('Professor',300,500,1.8,4)
       inimigo2=PP('Professor',900,200,1.8,4)
 
-      
+    flag=0
+    main_menu=True  
     sair=False
     #Estrutura para fechar jogo
     
     while sair==False:
-    
+        if main_menu == True:
+        #draw menu
+          if jogar_button.draw():
+             if (flag==1):
+                    main_menu = False
+          if sobre_button.draw():
+              if (flag==0):
+                  run = False
+          if comojogar_button.draw():
+              if (flag==0):
+                  main_menu = False
+          if personagem1_button.draw():
+              pers1=True
+              pers2=False
+              flag = 1
+          if personagem2_button.draw():
+              flag = 1
+              pers1=False
+              pers2=True
+          atualp()
+
+        else:
         #ScreenScrool dinâmica
-        if (player.rect.right > 390):
-          player.rect.x -= player.speed
-          screen_scroll += - player.speed
-          bg_scroll -= - player.speed
-        if (player.rect.right < 280):
-          player.rect.x += player.speed
-          screen_scroll -= - player.speed
-          bg_scroll += - player.speed
 
-        #Troca de MAPA de acordo com o nível
-        if level==1:
-          variavel=game_map
-        if level==2:
-          variavel=game_map2
-        if level==3:
-          variavel=game_map3
-        
-        #Leitura dos NIVEIS
-        draw_bg()
-        tile_rects = []
-        tile_lava = []
-        tile_rects_ini = []
-        tile_rects_placa=[]
-        y = 0
+          if (player.rect.right > 390):
+            player.rect.x -= player.speed
+            screen_scroll += - player.speed
+            bg_scroll -= - player.speed
+          if (player.rect.right < 280):
+            player.rect.x += player.speed
+            screen_scroll -= - player.speed
+            bg_scroll += - player.speed
 
-        for row in variavel:
-            x = 0
-            for tile in row:
-              if tile == '1':
-                tela.blit(dirt_image, ( x * tile_size+screen_scroll, y * tile_size))
-              if tile == '2':
-                tela.blit(grass_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '3':
-                tela.blit(rockdirt_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '4':
-                tela.blit(sand_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '5':
-                tela.blit(snow_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '6':
-                tela.blit(rock_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '14':
-                tela.blit(water_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '15':
-                tela.blit(waterf_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '16':
-                tela.blit(lava_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '17':
-                tela.blit(lavaf_image, (x * tile_size+screen_scroll, y * tile_size))              
-              if tile == '20':
-                tela.blit(signexit_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '21':
-                tela.blit(signr_image, (x * tile_size+screen_scroll, y * tile_size))
-              if tile == '22':
-                tela.blit(signl_image, (x * tile_size+screen_scroll, y * tile_size))
-              #TileRect Append
-              if (tile == '1')or(tile == '2')or(tile == '3')or(tile == '4')or(tile == '5')or(tile == '6'):
-                tile_rects.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
-              #TileLava Append
-              if (tile=='17'):
-                tile_lava.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
-              #TileInimigos Append
-              if (tile == '1')or(tile == '2')or(tile == '3')or(tile == '4')or(tile == '5')or(tile == '6'):
-                tile_rects_ini.append(pygame.Rect(x * tile_size, y * tile_size, tile_size, tile_size))
-              #placa Passa missão
-              if (tile=='21'):
-                tile_rects_placa.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
-              x += 1
-            y += 1
+          #Troca de MAPA de acordo com o nível
+          if level==1:
+            variavel=game_map
+          if level==2:
+            variavel=game_map2
+          if level==3:
+            variavel=game_map3
+          
+          atualp()
 
-        #inimigos do LEVEL 1
-        if level==1:
+          #Leitura dos NIVEIS
+          draw_bg()
+          tile_rects = []
+          tile_lava = []
+          tile_rects_ini = []
+          tile_rects_placa=[]
+          y = 0
 
-          inimigo1.update_animation()
-          inimigo1.ai()
-          inimigo1.drawAI()
+          for row in variavel:
+              x = 0
+              for tile in row:
+                if tile == '1':
+                  tela.blit(dirt_image, ( x * tile_size+screen_scroll, y * tile_size))
+                if tile == '2':
+                  tela.blit(grass_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '3':
+                  tela.blit(rockdirt_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '4':
+                  tela.blit(sand_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '5':
+                  tela.blit(snow_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '6':
+                  tela.blit(rock_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '14':
+                  tela.blit(water_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '15':
+                  tela.blit(waterf_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '16':
+                  tela.blit(lava_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '17':
+                  tela.blit(lavaf_image, (x * tile_size+screen_scroll, y * tile_size))              
+                if tile == '20':
+                  tela.blit(signexit_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '21':
+                  tela.blit(signr_image, (x * tile_size+screen_scroll, y * tile_size))
+                if tile == '22':
+                  tela.blit(signl_image, (x * tile_size+screen_scroll, y * tile_size))
+                #TileRect Append
+                if (tile == '1')or(tile == '2')or(tile == '3')or(tile == '4')or(tile == '5')or(tile == '6'):
+                  tile_rects.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
+                #TileLava Append
+                if (tile=='17'):
+                  tile_lava.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
+                #TileInimigos Append
+                if (tile == '1')or(tile == '2')or(tile == '3')or(tile == '4')or(tile == '5')or(tile == '6'):
+                  tile_rects_ini.append(pygame.Rect(x * tile_size, y * tile_size, tile_size, tile_size))
+                #placa Passa missão
+                if (tile=='21'):
+                  tile_rects_placa.append(pygame.Rect(x * tile_size+screen_scroll, y * tile_size, tile_size, tile_size))
+                x += 1
+              y += 1
 
-          inimigo2.update_animation()
-          inimigo2.ai()
-          inimigo2.drawAI()
+          #inimigos do LEVEL 1
+          if level==1:
 
-        #JOGADOR
-        player.update_animation()  #faz o update a partir dos fps
-        player.update()
-        player.draw()              #chama jogador
+            inimigo1.update_animation()
+            inimigo1.ai()
+            inimigo1.drawAI()
 
-        #TROCA LEVELS
-        for g in range(2):
-           #check collision in the x direction
-           if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
+            inimigo2.update_animation()
+            inimigo2.ai()
+            inimigo2.drawAI()
+
+          #JOGADOR
+          player.update_animation()  #faz o update a partir dos fps
+          player.update()
+          player.draw()              #chama jogador
+
+          #TROCA LEVELS
+          for g in range(2):
+             #check collision in the x direction
+             if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
+                screen_scroll=0
+                bg_scroll=0
+                passagem=True
+             #check for collision in the y direction
+             if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
+                passagem=True
+                screen_scroll=0
+                bg_scroll=0
+  
+          if passagem==True:
+            level +=1
+            passagem=False
+
+          #print(player.health)
+          real_time_x_player=player.rect.x-screen_scroll
+          #CHOQUE Com Inimigos LEVEL1        
+          if level==1:
+            inim_level_1=[inimigo1, inimigo2]
+            for x in range(2):
+              if inim_level_1[x].rect.x>real_time_x_player:
+                if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
+                  player.health=0
+              if real_time_x_player>inim_level_1[x].rect.x:
+                if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
+                  player.health=0
+
+          #Teste Nivel
+          if player.alive:
+              if moving_left or moving_right:
+                  player.update_action(0)
+              else: 
+                  player.update_action(1)
+
+          if player.health == 0:
               screen_scroll=0
-              bg_scroll=0
-              passagem=True
-           #check for collision in the y direction
-           if tile_rects_placa[g].colliderect(player.rect.x, player.rect.y, player.width, player.height):
-              passagem=True
-              screen_scroll=0
-              bg_scroll=0
- 
-        if passagem==True:
-          level +=1
-          passagem=False
-                
-        #print(player.health)
-        real_time_x_player=player.rect.x-screen_scroll
-        #CHOQUE Com Inimigos LEVEL1        
-        if level==1:
-          inim_level_1=[inimigo1, inimigo2]
-          for x in range(2):
-            if inim_level_1[x].rect.x>real_time_x_player:
-              if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
-                player.health=0
-                print("MORREU")
-            if real_time_x_player>inim_level_1[x].rect.x:
-              if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
-                player.health=0
-                print("MORREU")
+              bg_scroll = 0
+              tela.fill((0, 0, 0))
+              font = pygame.font.Font('freesansbold.ttf', 32)
+              text = font.render('Você errou, calouro! Aperte R para reiniciar', True, (255, 255, 255))
+              textRect = text.get_rect()
+              textRect.center = (screen_width//2, screen_height//2)
+              tela.blit(text, textRect)
+              if restart==True:
+                player.health=100
+                player.rect.y=100
 
-
-        #Teste Nivel
-        if player.alive:
-            if moving_left or moving_right:
-                player.update_action(0)
-            else: 
-                player.update_action(1)
-                
-        if player.health == 0:
-            screen_scroll=0
-            bg_scroll = 0
-            tela.fill((0, 0, 0))
-            font = pygame.font.Font('freesansbold.ttf', 32)
-            text = font.render('Você errou, calouro! Aperte R para reiniciar', True, (255, 255, 255))
-            textRect = text.get_rect()
-            textRect.center = (screen_width//2, screen_height//2)
-            tela.blit(text, textRect)
-            if restart:
-              player.health=100
-              player.rect.y = 100
-
-
-
-        player.move(moving_left,moving_right)
-
+          player.move(moving_left,moving_right)
 
         #FPS
         clock.tick(fps)
@@ -517,7 +598,6 @@ def main():
                 if event.key == pygame.K_r and player.health == 0:
                     restart = True
                 
-
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
                     moving_left=False
