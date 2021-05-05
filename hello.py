@@ -405,7 +405,7 @@ def main():
     #if pers2==True:
     #  Persona_v='Personagem2'
     #  print(Persona_v)
-    player=PP('Personagem1',300,0,1.8,5)
+    
 
     if level==1:
       #inimigos LEVEL1 - chamar
@@ -416,10 +416,9 @@ def main():
     main_menu=True  
     sair=False
     #Estrutura para fechar jogo
-    
-    while sair==False:
+    while sair==False:    
         if main_menu == True:
-        #draw menu
+          character = 'Personagem1'
           if jogar_button.draw():
              if (flag==1):
                     main_menu = False
@@ -437,7 +436,17 @@ def main():
               flag = 1
               pers1=False
               pers2=True
+              #character = 'Personagem2'
+          if pers1: 
+              character = 'Personagem1'
+          if pers2: 
+              character = 'Personagem2' 
+          
+          player=PP(character,300,0,1.8,5)
+
           atualp()
+
+          player=PP(character,300,0,1.8,5)
 
         else:
         #ScreenScrool dinâmica
@@ -459,7 +468,7 @@ def main():
           if level==3:
             variavel=game_map3
           
-          atualp()
+          #atualp()
 
           #Leitura dos NIVEIS
           draw_bg()
