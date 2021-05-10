@@ -409,8 +409,17 @@ def main():
 
     if level==1:
       #inimigos LEVEL1 - chamar
-      inimigo1=PP('Professor',300,500,1.8,4)
-      inimigo2=PP('Professor',900,200,1.8,4)
+      inimigo0 = PP('Professor',4010,200,1.8,4)
+      inimigo1=PP('Professor',4000,200,1.8,4)
+      inimigo2=PP('Professor',4000,200,1.8,4)
+      inimigo3=PP('Professor',3950,200,1.8,4)
+      inimigo4=PP('Professor',4050,200,1.8,4)
+      inimigo5=PP('Professor',5000,200,1.8,4)
+      inimigo6=PP('Professor',3900,200,1.8,4)
+      inimigo7=PP('Professor',4100,200,1.8,4)
+      inimigo8=PP('Professor',4150,200,1.8,4)
+      inimigo9=PP('Professor',4125,200,1.8,4)
+
 
     flag=0
     main_menu=True  
@@ -524,7 +533,10 @@ def main():
 
           #inimigos do LEVEL 1
           if level==1:
-
+            inimigo0.update_animation()
+            inimigo0.ai()
+            inimigo0.drawAI()
+            
             inimigo1.update_animation()
             inimigo1.ai()
             inimigo1.drawAI()
@@ -532,6 +544,15 @@ def main():
             inimigo2.update_animation()
             inimigo2.ai()
             inimigo2.drawAI()
+
+            inimigo3.update_animation()
+            inimigo3.ai()
+            inimigo3.drawAI()
+
+            inimigo4.update_animation()
+            inimigo4.ai()
+            inimigo4.drawAI()
+
 
           #JOGADOR
           player.update_animation()  #faz o update a partir dos fps
