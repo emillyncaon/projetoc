@@ -338,9 +338,9 @@ def main():
                         self.health = 0
                     
             if self.rect.bottom<0:
-              self.health = 0
+                self.health = 0
             if self.rect.bottom>640:
-              self.health=0
+                self.health=0
 
             self.rect.x += dx
             self.rect.y += dy
@@ -536,7 +536,7 @@ def main():
                 x += 1
               y += 1
 
-          print(screen_scroll)
+         # print(screen_scroll)
           #inimigos do LEVEL 1
           if level==1:
             inimigo0.update_animation()
@@ -547,6 +547,7 @@ def main():
             inimigo1.ai()
             inimigo1.drawAI()
 
+        
           if level==2:
             if screen_scroll>-1200:
               inimigo2.update_animation()
@@ -606,26 +607,38 @@ def main():
           #print(player.rect.x-screen_scroll,player.rect.y )
           real_time_x_player=player.rect.x-screen_scroll
           #CHOQUE Com Inimigos LEVEL1        
-          #if level==1:
-          #  inim_level_1=[inimigo0, inimigo1]
-          #  for x in range(len(inim_level_1)):
-          #    if inim_level_1[x].rect.x>real_time_x_player:
-          #      if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
-          #        player.health=0
-          #    if real_time_x_player>inim_level_1[x].rect.x:
-          #      if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
-          #        player.health=0
+          if level==1:
+            inim_level_1=[inimigo0, inimigo1]
+            for x in range(len(inim_level_1)):
+              if inim_level_1[x].rect.x>real_time_x_player:
+                if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
+                  player.health=0
+              if real_time_x_player>inim_level_1[x].rect.x:
+                if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
+                  player.health=0
                 
           #CHOQUE Com Inimigos LEVEL2        
-          #if level==2:
-          #  inim_level_2=[inimigo2, inimigo3, inimigo4, inimigo5, inimigo6, inimigo7, inimigo8, inimigo9, inimigo10, inimigo11 ]
-          #  for x in range(len(inim_level_2)):
-          #    if inim_level_2[x].rect.x>real_time_x_player:
-          #      if inim_level_2[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
-          #        player.health=0
-          #    if real_time_x_player>inim_level_2[x].rect.x:
-          #      if inim_level_2[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
-          #        player.health=0
+          if level==2:
+            inim_level_2=[inimigo2, inimigo3,inimigo6, inimigo7, inimigo9, inimigo10, inimigo11 ]
+            for x in range(len(inim_level_2)):
+              if inim_level_2[x].rect.x>real_time_x_player:
+                if inim_level_2[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
+                  if player.vel_y != 0:
+                    player.jump = True
+                    player.vel_y = -12
+                    player.jump = False
+                  else:
+                    player.health=0
+
+              if real_time_x_player>inim_level_2[x].rect.x:
+                if inim_level_2[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
+                  if player.vel_y != 0 :
+                    player.jump = True
+                    player.vel_y = -12
+                    player.jump = False
+                    
+                  else: 
+                    player.health = 0
 
           #Teste Nivel
           if player.alive:
@@ -665,6 +678,7 @@ def main():
                     moving_right=True
                 if event.key == pygame.K_w and player.health == 100:
                     player.jump=True
+
                 if event.key == pygame.K_r and player.health == 0:
                     restart = True
 
@@ -674,6 +688,7 @@ def main():
                     moving_right=True
                 if event.key == pygame.K_UP and player.health == 100:
                     player.jump=True
+
                 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_a:
