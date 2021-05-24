@@ -411,8 +411,55 @@ def main():
     
 
     #Level 1
-    inimigo0=PP('Professor',4010,200,1.8,4)
-    inimigo1=PP('Professor',4000,200,1.8,4)
+    inimigo0=PP('Professor',3400,200,1.8,8)
+    inimigo1=PP('Professor',3500,200,1.8,8)
+
+    inimigo12=PP('Professor',3600,200,1.8,8)
+    inimigo13=PP('Professor',3700,200,1.8,8)
+
+    inimigo14=PP('Professor',3800,200,1.8,8)
+    inimigo15=PP('Professor',3900,200,1.8,8)
+
+    inimigo16=PP('Professor',4000,200,1.8,8.5)
+    inimigo17=PP('Professor',4100,200,1.8,8)
+
+    inimigo18=PP('Professor',4200,200,1.8,8)
+    inimigo19=PP('Professor',4300,200,1.8,8)
+
+    inimigo20=PP('Professor',4400,200,1.8,8)
+    inimigo21=PP('Professor',4500,200,1.8,8)
+
+    inimigo22=PP('Professor',4600,200,1.8,8)
+    inimigo23=PP('Professor',4700,200,1.8,8)
+
+    inimigo24=PP('Professor',4800,200,1.8,8)
+    inimigo25=PP('Professor',4900,200,1.8,8)
+
+    inimigo26=PP('Professor',5000,200,1.8,8)
+    inimigo27=PP('Professor',5100,200,1.8,8)
+
+    inimigo28=PP('Professor',5200,200,1.8,8.7)
+    inimigo29=PP('Professor',5300,200,1.8,8)
+
+    inimigo30=PP('Professor',5400,200,1.8,8)
+    inimigo31=PP('Professor',5500,200,1.8,8)
+
+    inimigo32=PP('Professor',5600,200,1.8,8)
+    inimigo33=PP('Professor',5700,200,1.8,8)
+
+    inimigo34=PP('Professor',5800,200,1.8,8)
+    inimigo35=PP('Professor',5900,200,1.8,8)
+
+    inimigo36=PP('Professor',6000,200,1.8,8)
+    inimigo37=PP('Professor',6100,200,1.8,8)
+
+
+
+
+    
+    
+  
+
 
     #Level 2
     inimigo2=PP('Professor',1010,400,1.8,4)
@@ -455,7 +502,7 @@ def main():
           if pers2: 
               character = 'Personagem2' 
           
-          player=PP(character,100,400,1.8,5)
+          player=PP(character,300,0,1.8,5)
           #player=PP(character,8883,543,1.8,5)
 
           atualp()
@@ -464,7 +511,7 @@ def main():
 
         else:
         #ScreenScrool dinâmica
-          level=2
+          level=1
           if (player.rect.right > 390):
             player.rect.x -= player.speed
             screen_scroll += - player.speed
@@ -539,43 +586,38 @@ def main():
          # print(screen_scroll)
           #inimigos do LEVEL 1
           if level==1:
-            inimigo0.update_animation()
-            inimigo0.ai()
-            inimigo0.drawAI()
-            
-            inimigo1.update_animation()
-            inimigo1.ai()
-            inimigo1.drawAI()
+            inim_level_1=[inimigo0, inimigo1, inimigo12, inimigo13, inimigo14, inimigo15, inimigo16, inimigo17, inimigo18, inimigo19, inimigo20, inimigo21, inimigo22, inimigo23, inimigo24, inimigo25, inimigo26, inimigo17, inimigo28, inimigo29, inimigo30, inimigo31, inimigo32, inimigo33,inimigo34, inimigo35, inimigo36, inimigo37] 
+            for i in inim_level_1:
+              i.update_animation()
+              i.ai()
+              i.drawAI()
+           
 
         
           if level==2:
-            if screen_scroll>-1200:
-              inimigo2.update_animation()
-              inimigo2.ai()
-              inimigo2.drawAI()
+            inimigo2.update_animation()
+            inimigo2.ai()
+            inimigo2.drawAI()
 
-              inimigo3.update_animation()
-              inimigo3.ai()
-              inimigo3.drawAI()
+            inimigo3.update_animation()
+            inimigo3.ai()
+            inimigo3.drawAI()
 
-            if screen_scroll<-1200 and screen_scroll>-2725:
-              inimigo6.update_animation()
-              inimigo6.ai()
-              inimigo6.drawAI()
+            inimigo6.update_animation()
+            inimigo6.ai()
+            inimigo6.drawAI()
 
-            if screen_scroll<-3035 and screen_scroll>-4550:
-              inimigo7.update_animation()
-              inimigo7.ai()
-              inimigo7.drawAI()
+            inimigo7.update_animation()
+            inimigo7.ai()
+            inimigo7.drawAI()
 
-            if screen_scroll<-4500 and screen_scroll>-6100:
-              inimigo9.update_animation()
-              inimigo9.ai()
-              inimigo9.drawAI()
+            inimigo9.update_animation()
+            inimigo9.ai()
+            inimigo9.drawAI()
 
-              inimigo10.update_animation()
-              inimigo10.ai()
-              inimigo10.drawAI()
+            inimigo10.update_animation()
+            inimigo10.ai()
+            inimigo10.drawAI()
 
 
   
@@ -608,14 +650,27 @@ def main():
           real_time_x_player=player.rect.x-screen_scroll
           #CHOQUE Com Inimigos LEVEL1        
           if level==1:
-            inim_level_1=[inimigo0, inimigo1]
+            inim_level_1=[inimigo0, inimigo1, inimigo12, inimigo13, inimigo14, inimigo15, inimigo16, inimigo17, inimigo18, inimigo19, inimigo20, inimigo21, inimigo22, inimigo23, inimigo24, inimigo25, inimigo26, inimigo17, inimigo28, inimigo29, inimigo30, inimigo31, inimigo32, inimigo33,inimigo34, inimigo35, inimigo36, inimigo37]
             for x in range(len(inim_level_1)):
               if inim_level_1[x].rect.x>real_time_x_player:
                 if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
-                  player.health=0
+                  if player.vel_y != 0:
+                    player.jump = True
+                    player.vel_y = -12
+                    player.jump = False
+                    
+                  else:
+                    player.health=0
+
               if real_time_x_player>inim_level_1[x].rect.x:
                 if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
-                  player.health=0
+                  if player.vel_y != 0:
+                    player.jump = True
+                    player.vel_y = -12
+                    player.jump = False
+                    
+                  else: 
+                    player.health = 0
                 
           #CHOQUE Com Inimigos LEVEL2        
           if level==2:
@@ -636,7 +691,6 @@ def main():
                     player.jump = True
                     player.vel_y = -12
                     player.jump = False
-                    
                   else: 
                     player.health = 0
 
