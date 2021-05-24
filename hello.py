@@ -511,7 +511,7 @@ def main():
 
         else:
         #ScreenScrool dinâmica
-          level=1
+          level=2
           if (player.rect.right > 390):
             player.rect.x -= player.speed
             screen_scroll += - player.speed
@@ -595,29 +595,12 @@ def main():
 
         
           if level==2:
-            inimigo2.update_animation()
-            inimigo2.ai()
-            inimigo2.drawAI()
-
-            inimigo3.update_animation()
-            inimigo3.ai()
-            inimigo3.drawAI()
-
-            inimigo6.update_animation()
-            inimigo6.ai()
-            inimigo6.drawAI()
-
-            inimigo7.update_animation()
-            inimigo7.ai()
-            inimigo7.drawAI()
-
-            inimigo9.update_animation()
-            inimigo9.ai()
-            inimigo9.drawAI()
-
-            inimigo10.update_animation()
-            inimigo10.ai()
-            inimigo10.drawAI()
+              inim_level_2=[inimigo2, inimigo3, inimigo6, inimigo7, inimigo9, inimigo10]
+              for i in inim_level_2:
+                i.update_animation()
+                i.ai()
+                i.drawAI()
+            
 
 
   
@@ -654,7 +637,7 @@ def main():
             for x in range(len(inim_level_1)):
               if inim_level_1[x].rect.x>real_time_x_player:
                 if inim_level_1[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
-                  if player.vel_y != 0:
+                  if player.vel_y >0:
                     player.jump = True
                     player.vel_y = -12
                     player.jump = False
@@ -664,7 +647,7 @@ def main():
 
               if real_time_x_player>inim_level_1[x].rect.x:
                 if inim_level_1[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
-                  if player.vel_y != 0:
+                  if player.vel_y > 0:
                     player.jump = True
                     player.vel_y = -12
                     player.jump = False
@@ -678,7 +661,7 @@ def main():
             for x in range(len(inim_level_2)):
               if inim_level_2[x].rect.x>real_time_x_player:
                 if inim_level_2[x].rect.colliderect(real_time_x_player-20, player.rect.y, player.width, player.height):
-                  if player.vel_y != 0:
+                  if player.vel_y > 0:
                     player.jump = True
                     player.vel_y = -12
                     player.jump = False
@@ -687,7 +670,7 @@ def main():
 
               if real_time_x_player>inim_level_2[x].rect.x:
                 if inim_level_2[x].rect.colliderect(real_time_x_player+20, player.rect.y, player.width, player.height):
-                  if player.vel_y != 0 :
+                  if player.vel_y > 0 :
                     player.jump = True
                     player.vel_y = -12
                     player.jump = False
