@@ -411,47 +411,47 @@ def main():
     
 
     #Level 1
-    inimigo0=PP('Professor',3400,200,1.8,3.6)
-    inimigo1=PP('Professor',3500,200,1.8,3.5)
+    inimigo0=PP('Professor',3400,200,1.8,3.9)
+    inimigo1=PP('Professor',3500,200,1.8,3.9)
 
-    inimigo12=PP('Professor',3600,200,1.8,3.6)
-    inimigo13=PP('Professor',3700,200,1.8,3.5)
+    inimigo12=PP('Professor',3600,200,1.8,3.9)
+    inimigo13=PP('Professor',3700,200,1.8,3.9)
 
-    inimigo14=PP('Professor',3800,200,1.8,3.6)
-    inimigo15=PP('Professor',3900,200,1.8,3.6)
+    inimigo14=PP('Professor',3800,200,1.8,3.9)
+    inimigo15=PP('Professor',3900,200,1.8,3.9)
 
-    inimigo16=PP('Professor',4000,200,1.8,3.6)
-    inimigo17=PP('Professor',4100,200,1.8,3.6)
+    inimigo16=PP('Professor',4000,200,1.8,3.9)
+    inimigo17=PP('Professor',4100,200,1.8,3.9)
 
-    inimigo18=PP('Professor',4200,200,1.8,3.6)
-    inimigo19=PP('Professor',4300,200,1.8,3.6)
+    inimigo18=PP('Professor',4200,200,1.8,3.9)
+    inimigo19=PP('Professor',4300,200,1.8,3.9)
 
-    inimigo20=PP('Professor',4400,200,1.8,3.6)
-    inimigo21=PP('Professor',4500,200,1.8,3.6)
+    inimigo20=PP('Professor',4400,200,1.8,3.9)
+    inimigo21=PP('Professor',4500,200,1.8,3.9)
 
-    inimigo22=PP('Professor',4600,200,1.8,3.6)
-    inimigo23=PP('Professor',4700,200,1.8,3.6)
+    inimigo22=PP('Professor',4600,200,1.8,3.9)
+    inimigo23=PP('Professor',4700,200,1.8,3.9)
 
-    inimigo24=PP('Professor',4800,200,1.8,3.6)
-    inimigo25=PP('Professor',4900,200,1.8,3.6)
+    inimigo24=PP('Professor',4800,200,1.8,3.9)
+    inimigo25=PP('Professor',4900,200,1.8,3.9)
 
-    inimigo26=PP('Professor',5000,200,1.8,3.6)
-    inimigo27=PP('Professor',5100,200,1.8,3.6)
+    inimigo26=PP('Professor',5000,200,1.8,3.9)
+    inimigo27=PP('Professor',5100,200,1.8,3.9)
 
-    inimigo28=PP('Professor',5200,200,1.8,3.6)
-    inimigo29=PP('Professor',5300,200,1.8,3.6)
+    inimigo28=PP('Professor',5200,200,1.8,3.9)
+    inimigo29=PP('Professor',5300,200,1.8,3.9)
 
-    inimigo30=PP('Professor',5400,200,1.8,3.6)
-    inimigo31=PP('Professor',5500,200,1.8,3.6)
+    inimigo30=PP('Professor',5400,200,1.8,3.9)
+    inimigo31=PP('Professor',5500,200,1.8,3.9)
 
-    inimigo32=PP('Professor',5600,200,1.8,3.6)
-    inimigo33=PP('Professor',5700,200,1.8,3.6)
+    inimigo32=PP('Professor',5600,200,1.8,3.9)
+    inimigo33=PP('Professor',5700,200,1.8,3.9)
 
-    inimigo34=PP('Professor',5800,200,1.8,3.6)
-    inimigo35=PP('Professor',5900,200,1.8,3.6)
+    inimigo34=PP('Professor',5800,200,1.8,3.9)
+    inimigo35=PP('Professor',5900,200,1.8,3.9)
 
-    inimigo36=PP('Professor',6000,200,1.8,3.6)
-    inimigo37=PP('Professor',6100,200,1.8,3.6)
+    inimigo36=PP('Professor',6000,200,1.8,3.9)
+    inimigo37=PP('Professor',6100,200,1.8,3.9)
 
 
 
