@@ -199,6 +199,9 @@ def main():
     pers1=False
     pers2=False
 
+    #Imagem Branca
+    corbranca=(255, 255, 255)
+
 
     #Classe botões: cria os botões e funcionalidades
     class Button():
@@ -454,14 +457,12 @@ def main():
                   main_menu = False
 
           if sobre_button.draw():
-              if (flag==0):
                   sobre=True
                   sobre2=False
                   como_jogar=False
                   main_menu = False
 
           if comojogar_button.draw():
-              if (flag==0):
                   sobre=False
                   sobre2=False
                   como_jogar=True
@@ -535,38 +536,38 @@ def main():
           inimigo5=PP('Professor4',3960,103,1.8,4)
           inimigo6=PP('Professor5',5600,370,0.23,4)
           inimigo7=PP('Professor6',5500,370,1.8,4)
-          inimigooito=PP('Professor2', 1010, 400, 1.8, 4)
+          inimigooito=PP('Professor2', 1010, 400, 0.45, 4)
           atualp()
 
         #Tela sobre1
         if sobre==True:
+          tela.fill(corbranca)
           tela.blit(telasobre1, (0, 0))
           if flechadir_button.draw():
-             if (flag==0):
                   sobre2=True
                   sobre=False
         
         #Tela sobre2
         if sobre2==True:
+          tela.fill(corbranca)
           tela.blit(telasobre2, (0, 0))
           if flechadir_button.draw():
-            if (flag==0):
               sobre2=False
               main_menu=True
 
         #Tela Como Jogar
         if como_jogar==True:
+          tela.fill(corbranca)
           tela.blit(telacomojogar, (0, 0))
           if flechadir_button.draw():
-            if (flag==0):
               como_jogar=False
               main_menu=True
 
         #Tela Fim do jogo e configurações para restart
         if end_game==True:
+          tela.fill(corbranca)
           tela.blit(telafinal, (0, 0))
           if flechadir_button.draw():
-            if (flag==1):
               end_game=False
               como_jogar=False
               main_menu=True
@@ -600,6 +601,7 @@ def main():
           if level==4:
             variavel=game_map4
 
+          level=3
           #Leitura dos NIVEIS
           draw_bg()
           tile_rects = []
@@ -652,6 +654,8 @@ def main():
                 x += 1
               y += 1
 
+          print(player.rect.x - screen_scroll, player.rect.y)
+          level=3
           #inimigos do LEVEL 1
           if level==1:
             inim_level_1=[inimigo0, inimigo1, inimigo12, inimigo13, inimigo14, inimigo15, inimigo16, inimigo17, inimigo18, inimigo19, inimigo20, inimigo21, inimigo22, inimigo23, inimigo24, inimigo25, inimigo26, inimigo17, inimigo28, inimigo29, inimigo30, inimigo31, inimigo32, inimigo33,inimigo34, inimigo35, inimigo36, inimigo37] 
